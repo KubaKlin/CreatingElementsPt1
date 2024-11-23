@@ -13,6 +13,26 @@ const people = [
 
 const wrapper = document.querySelector('#wrapper');
 
+function cloneCard(card) {
+  const clonedCard = card.cloneNode(true);
+
+  const clonedDeleteButton = clonedCard.querySelector('.remove-button');
+  if (clonedDeleteButton) {
+    clonedDeleteButton.addEventListener('click', function() {
+      clonedCard.remove();
+    })
+  }
+
+  const clonedCloneButton = clonedCard.querySelector('.clone-button');
+  if (clonedCloneButton) {
+    clonedCloneButton.addEventListener('click', function() {
+      cloneCard(card);
+    });
+  }
+
+  wrapper.append(clonedCard);
+}
+
 people.forEach(function(person) {
   const card = document.createElement('div');
   if (wrapper) {
@@ -42,24 +62,7 @@ people.forEach(function(person) {
   card.append(cloneCardButton);
 
   cloneCardButton.addEventListener('click', function() {
-    const clonedCard = card.cloneNode(true);
-
-    const clonedDeleteButton = clonedCard.querySelector('.remove-button');
-    if (clonedDeleteButton) {
-      clonedDeleteButton.addEventListener('click', function() {
-        clonedCard.remove();
-      })
-    }
-
-    const clonedCloneButton = clonedCard.querySelector('.clone-button');
-    if (clonedCloneButton) {
-      clonedCloneButton.addEventListener('click', function() {
-        const secondClonedCard = clonedCard.cloneNode(true);
-        wrapper.append(secondClonedCard);
-      })
-    }
-
-    wrapper.append(clonedCard);
-  })
+    cloneCard(card);
+  });
 })
 
